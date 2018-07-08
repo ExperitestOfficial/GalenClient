@@ -3,3 +3,7 @@ build/
 .gradle/4.3/fileChanges/last-build.bin
 .gradle/
 .settings/
+gradle.properties
+*.iml
+.idea
+
