@@ -28,8 +28,8 @@ buildscript {
     }
 }
 apply plugin: 'com.bmuschko.nexus'
-archivesBaseName = 'teachUpload-jvm'
-group = "com.yourCompany.package"
+archivesBaseName = 'visual'
+group = "com.experitest"
 version = "0.1"
 
 modifyPom {
