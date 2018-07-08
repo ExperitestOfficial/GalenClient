@@ -19,6 +19,63 @@ repositories {
     jcenter()
 }
 
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
+}
+apply plugin: 'com.bmuschko.nexus'
+archivesBaseName = 'teachUpload-jvm'
+group = "com.yourCompany.package"
+version = "0.1"
+
+modifyPom {
+    project {
+        name 'GalenClient'
+        description 'Visual testing client'
+        url 'https://bitbucket.org/objdict/objjson'
+        inceptionYear '2018'
+        scm {
+            url 'https://github.com/ExperitestOfficial/GalenClient'
+            connection 'scm:https://github.com/ExperitestOfficial/GalenClient.git'
+            developerConnection 'scm:git://github.com/ExperitestOfficial/GalenClient.git'
+        }
+        licenses {
+            license {
+                name 'MIT License'
+                url 'https://opensource.org/licenses/MIT'
+                distribution 'repo'
+            }
+        }
+        developers {
+            developer {
+                id 'tombensim'
+                name 'Tom Bensimhon'
+                email 'tom_p@experitest.com'
+            }
+            developer {
+                id 'guyarieli'
+                name 'Guy Arieli'
+                email 'guy@experitest.com'
+            }
+        }
+    }
+}
+extraArchive {
+    sources = true
+    tests = true
+    javadoc = true
+}
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+}
+
+
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
