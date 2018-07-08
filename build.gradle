@@ -7,9 +7,23 @@
  */
 
 // Apply the java-library plugin to add support for Java Library
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
+}
+
+plugins {
+    id 'io.codearte.nexus-staging' version '0.11.0'
+}
+
 
 apply plugin: 'java-library'
 apply plugin: 'eclipse'
+apply plugin: 'com.bmuschko.nexus'
 //apply plugin: 'com.github.johnrengelman.shadow'
 
 // In this section you declare where to find the dependencies of your project
@@ -19,24 +33,16 @@ repositories {
     jcenter()
 }
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-    }
-}
-apply plugin: 'com.bmuschko.nexus'
+
 archivesBaseName = 'visual'
 group = "com.experitest"
-version = "0.1"
+version = "0.6"
 
 modifyPom {
     project {
         name 'GalenClient'
         description 'Visual testing client'
-        url 'https://bitbucket.org/objdict/objjson'
+        url 'https://github.com/ExperitestOfficial/GalenClient'
         inceptionYear '2018'
         scm {
             url 'https://github.com/ExperitestOfficial/GalenClient'
@@ -76,10 +82,14 @@ nexus {
 }
 
 
+nexusStaging {
+    packageGroup = "com.experitest" //optional if packageGroup == project.getGroup()
+}
+
+
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
     api 'org.apache.commons:commons-math3:3.6.1'
-
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:23.0'
 	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
