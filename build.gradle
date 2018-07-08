@@ -36,7 +36,7 @@ repositories {
 
 archivesBaseName = 'visual'
 group = "com.experitest"
-version = "0.8"
+version = "0.9"
 
 modifyPom {
     project {
@@ -92,7 +92,7 @@ dependencies {
     api 'org.apache.commons:commons-math3:3.6.1'
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:23.0'
-	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.13.0'
 	compile group: 'org.json', name: 'json', version: '20180130'
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
