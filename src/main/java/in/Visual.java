@@ -18,9 +18,7 @@ public class Visual {
 	private static String lastJsonResult = null;
 	private static String lastResultUrl = null;
 	private static String lastSummary = null;
-	public static void setAccessKey(String accessKey) {
-		Visual.accessKey = accessKey;
-	}
+	private static boolean debug = false;
 	public static boolean verify(WebDriver driver, String pageName) {
 		boolean status = false;
 		lastJsonResult = null;
@@ -43,11 +41,20 @@ public class Visual {
 			if(script.endsWith("\"")) {
 				script = script.substring(0, script.length() - 1);
 			}
-			script = new String( Base64.getDecoder().decode(script));
+			script = new String( Base64.getDecoder().decode(script), "UTF-8");
+			if(debug) {
+				System.out.println(script);
+			}
 			String body = (String)((JavascriptExecutor)driver).executeScript(script);
+			if(debug) {
+				System.out.println(body);
+			}
 			String screenShotBase64 = ((TakesScreenshot )driver).getScreenshotAs(OutputType.BASE64);
-			body = body.replaceAll("<<SCREEN>>", screenShotBase64);
+			body = body.replace("<<SCREEN>>", screenShotBase64);
 			lastJsonResult = executePost("https://f3a265wlhl.execute-api.us-east-1.amazonaws.com/dev", body);
+			if(debug) {
+				System.out.println(lastJsonResult);
+			}
 			JSONObject json = new JSONObject(lastJsonResult);
 			if(json.has("resultUrl")) {
 				lastResultUrl = json.getString("resultUrl");
@@ -84,6 +91,16 @@ public class Visual {
 	public static void setLastSummary(String lastSummary) {
 		Visual.lastSummary = lastSummary;
 	}
+	public static boolean isDebug() {
+		return debug;
+	}
+	public static void setDebug(boolean debug) {
+		Visual.debug = debug;
+	}
+	public static void setAccessKey(String accessKey) {
+		Visual.accessKey = accessKey;
+	}
+
 	private static String executePost(String urlTxt, String body) throws Exception{
 		URL url = new URL(urlTxt);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
