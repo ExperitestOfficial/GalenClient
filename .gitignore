@@ -7,3 +7,4 @@ gradle.properties
 *.iml
 .idea
 out
+secret-key.gpg
