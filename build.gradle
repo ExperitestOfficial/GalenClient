@@ -36,7 +36,7 @@ repositories {
 
 archivesBaseName = 'visual'
 group = "com.experitest"
-version = "0.9"
+version = "0.10"
 
 modifyPom {
     project {

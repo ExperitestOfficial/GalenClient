@@ -50,6 +50,9 @@ public class Visual {
 				System.out.println(body);
 			}
 			String screenShotBase64 = ((TakesScreenshot )driver).getScreenshotAs(OutputType.BASE64);
+			if(screenShotBase64.startsWith("{")) {
+				screenShotBase64 = new JSONObject(screenShotBase64).getString("value");
+			}
 			body = body.replace("<<SCREEN>>", screenShotBase64);
 			lastJsonResult = executePost("https://f3a265wlhl.execute-api.us-east-1.amazonaws.com/dev", body);
 			if(debug) {
